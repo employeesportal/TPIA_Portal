@@ -78,23 +78,33 @@
     </div>
 </div>
 
-<!-- MODAL POPUP (Shared Detail View) -->
-<div id="summary-drilldown-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-4xl max-h-[85vh] flex flex-col overflow-hidden animate-fade-in">
-        <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+<!-- 🎯 FULL DETAILS MODAL (Upgraded for Full Data) -->
+<div id="summary-drilldown-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[150] hidden flex items-center justify-center p-3 sm:p-4 print:hidden">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-5xl max-h-[85vh] flex flex-col overflow-hidden animate-fade-in scale-in">
+        <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50 shrink-0">
             <div>
-                <h3 id="drilldown-modal-title" class="font-black text-xs sm:text-sm text-slate-900 uppercase">Filtered Inspection Calls</h3>
-                <p id="drilldown-modal-subtitle" class="text-[11px] sm:text-xs text-slate-500 font-bold">List of related calls matching criteria</p>
+                <h3 id="drilldown-modal-title" class="font-black text-sm sm:text-lg text-slate-900 uppercase flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i> Full Inspection Details
+                </h3>
+                <p id="drilldown-modal-subtitle" class="text-blue-600 font-black font-mono text-xs mt-0.5"></p>
             </div>
-            <button onclick="window.closeDrilldownModal()" class="w-8 h-8 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-black flex items-center justify-center transition cursor-pointer">✕</button>
+            <button onclick="window.closeDrilldownModal()" class="w-8 h-8 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-black flex items-center justify-center transition cursor-pointer">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
         </div>
-        <div class="p-3 sm:p-5 overflow-y-auto flex-1 custom-scrollbar">
-            <div id="drilldown-modal-content" class="overflow-x-auto"></div>
+        <div class="p-4 sm:p-6 overflow-y-auto flex-1 custom-scrollbar bg-slate-50/50">
+            <div id="drilldown-modal-content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+        <div class="p-4 border-t border-slate-100 bg-white flex justify-end shrink-0">
+            <button onclick="window.closeDrilldownModal()" class="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black shadow-md transition cursor-pointer">Close Window</button>
         </div>
     </div>
 </div>
 
 <style>
+    .scale-in { animation: scaleIn 0.2s ease-out forwards; }
+    @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
     @media print {
         .print\:hidden { display: none !important; }
         .print\:block { display: block !important; }
@@ -146,7 +156,9 @@
 
 <script>
     // 🚀 GLOBAL & USER STATE
- 
+    window.API_URL = window.API_URL || "https://script.google.com/macros/s/AKfycbxYMiv0JkwTGb0HAc-K6mBF5C9iXYdchW44GUmgmnLc7YHUDmJEU6LIyPtCFnF0H3l7/exec";
+    window.AVAILABLE_AGENCIES = window.AVAILABLE_AGENCIES || ["Equalitas", "A-Mark", "TCIL"];
+
     const activeSession = localStorage.getItem('portal_user');
     window.currentUser = activeSession ? JSON.parse(activeSession) : { role: "admin", name: "Admin", agency: "All" };
 
@@ -158,7 +170,6 @@
         window.allowedAgencies = [window.currentUser.agency];
     }
 
-    // Default to the first agency the user is allowed to see
     const defaultAgency = (window.allowedAgencies && window.allowedAgencies.length > 0) ? window.allowedAgencies[0] : "Equalitas";
 
     window.currentAgency = defaultAgency;
@@ -268,11 +279,9 @@
         return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : yyyyMmDd;
     }
 
-
     async function fetchInspectorsList(forceRefresh = false) {
         if (!window.API_URL) return;
         
-        // Skip fetching if we already have the list and aren't forcing a refresh
         if (!forceRefresh && window.agencyInspectorsCache.length > 0) return;
         
         try {
@@ -300,7 +309,6 @@
         window.dailyOpsCache = {}; 
         window.isFetching = false;
 
-        // Force a total server sync
         await Promise.all([ 
             fetchInspectorsList(true), 
             fetchAgencyData(window.currentAgency, true) 
@@ -355,7 +363,6 @@
         }
     }
 
-   
     window.resetPortalFilters = function() {
         const dateInput = document.getElementById('filter-daily-date');
         if (dateInput) {
@@ -423,12 +430,10 @@
         const inspectorMap = {};
         agencyInspectors.forEach(insp => { inspectorMap[insp] = { completedTasks: [], preparedTasks: [] }; });
 
-        // ⚡ UPDATED DATA LOOP: Uses robust `getRowValue` extraction
         data.forEach(row => {
             const inspector = String(window.getRowValue(row, 'inspecting engineer') || 'Unassigned').trim();
             if (!inspectorMap[inspector]) inspectorMap[inspector] = { completedTasks: [], preparedTasks: [] };
 
-            // Fetch dates specifically from Log strings
             const inspLogRaw = window.getRowValue(row, 'inspection completion log') || window.getRowValue(row, 'inspection completed') || '';
             const prepLogRaw = window.getRowValue(row, 'report prepared') || window.getRowValue(row, 'report repared') || '';
 
@@ -559,21 +564,80 @@
         if(window.lucide) window.lucide.createIcons();
     };
 
-    window.openSingleInspectionDetails = function(rowDataStr) {
+    // 🚀 UPDATED: Shows exactly the 30 columns requested by the user
+  // 🚀 UPDATED: Fetches full 30 columns from backend on click
+    window.openSingleInspectionDetails = async function(rowDataStr) {
         let rowData = typeof rowDataStr === 'string' ? JSON.parse(decodeURIComponent(rowDataStr)) : rowDataStr;
-        const modal = document.getElementById('summary-drilldown-modal');
-        document.getElementById('drilldown-modal-title').textContent = `Inspection Details: ${window.getRowValue(rowData, 'inspection code') || 'N/A'}`;
-        document.getElementById('drilldown-modal-subtitle').textContent = `Inspecting Engineer: ${window.getRowValue(rowData, 'inspecting engineer') || 'Unassigned'}`;
+        const code = window.getRowValue(rowData, 'inspection code') || 'Unknown ID';
+        const inspector = window.getRowValue(rowData, 'inspecting engineer') || 'Unassigned';
         
-        let detailsHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">`;
-        for (const [key, val] of Object.entries(rowData)) {
-            if (key === "Agency_Source") continue;
-            detailsHTML += `<div class="p-3 bg-slate-50 border border-slate-200 rounded-xl"><span class="block text-[10px] font-black uppercase text-slate-400">${key}</span><span class="font-bold text-slate-800">${val || '-'}</span></div>`;
-        }
-        document.getElementById('drilldown-modal-content').innerHTML = detailsHTML + `</div>`;
+        const modal = document.getElementById('summary-drilldown-modal');
+        document.getElementById('drilldown-modal-title').innerHTML = `<i data-lucide="file-text" class="w-5 h-5 text-blue-600 inline mr-2 align-middle"></i>Inspection Details: ${code}`;
+        document.getElementById('drilldown-modal-subtitle').textContent = `Inspecting Engineer: ${inspector}`;
+        
+        const contentArea = document.getElementById('drilldown-modal-content');
+        
+        // Show loading state
+        contentArea.className = "flex items-center justify-center py-20 w-full";
+        contentArea.innerHTML = `<div class="flex flex-col items-center gap-3 text-slate-500 font-bold"><i data-lucide="loader-2" class="w-8 h-8 animate-spin text-blue-600"></i><span>Fetching full record from server...</span></div>`;
         modal.classList.remove('hidden'); modal.classList.add('flex');
-    };
+        if(window.lucide) lucide.createIcons();
 
+        try {
+            // Call the new backend function
+            const payload = { 
+                action: "getDailyWorkFullDetails", 
+                user: window.currentUser, 
+                agency: window.currentAgency,
+                inspectionCode: code
+            };
+            
+            const response = await fetch(window.API_URL, { 
+                method: 'POST', redirect: 'follow', 
+                body: JSON.stringify(payload), 
+                headers: { "Content-Type": "text/plain;charset=utf-8" } 
+            });
+            const result = await response.json();
+            
+            if (result.status === "success" || result.status === true) {
+                const fullRecord = result.data;
+                
+                contentArea.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full bg-slate-50/50";
+                contentArea.innerHTML = '';
+                
+                // Exact list of 30 columns
+                const allColumns = [
+                    "Inspection Code", "Inspector Order Ref No", "WBS Number", "Received on Date", 
+                    "Call Mode", "Call Status", "Letter Issue Authority", "Zone", "Circle", "Division", 
+                    "Scheme/ Head", "Description of Work", "Inspection Site With Land Mark", 
+                    "Contractor Contact Number", "Proposed Insp. Duration", "Tender No", 
+                    "Contactor Name", "Contactor Agreement Amount (Rs)", "Inspecting Engineer TPIA", 
+                    "Date of Inspection", "Inspection Completed?", "Inspection Completion Log", 
+                    "Report Prepared?", "Report Submission Date", "Billed to DISCOM Date", 
+                    "Type of Inspection", "Quantity", "Calculated Mandays", "Remark", "Project Status"
+                ];
+                
+                allColumns.forEach(key => {
+                    const val = window.getRowValue(fullRecord, key) || "-";
+                    const isFullWidth = key.toLowerCase().includes("description") || key.toLowerCase().includes("site") || key.toLowerCase().includes("remark") || key.toLowerCase().includes("type of inspection");
+                    
+                    contentArea.innerHTML += `
+                        <div class="${isFullWidth ? 'md:col-span-2 lg:col-span-3' : ''} bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                            <label class="block text-[9px] font-black uppercase text-slate-400 mb-1.5 tracking-wide">${key}</label>
+                            <div class="text-xs sm:text-sm font-bold text-slate-800 whitespace-pre-wrap break-words leading-snug">${val}</div>
+                        </div>
+                    `;
+                });
+                
+            } else {
+                contentArea.innerHTML = `<div class="text-rose-500 font-bold p-10 text-center w-full">Error: ${result.message}</div>`;
+            }
+        } catch (error) {
+            contentArea.innerHTML = `<div class="text-rose-500 font-bold p-10 text-center w-full">Network Error. Could not connect to server.</div>`;
+        }
+        
+        if(window.lucide) lucide.createIcons();
+    };
     window.closeDrilldownModal = function() { 
         const m = document.getElementById('summary-drilldown-modal');
         m.classList.add('hidden'); m.classList.remove('flex'); 
@@ -595,15 +659,13 @@
 
         window.renderDailyAgencyTabs();
         
-        // Force the initial active state manually so it loads data immediately
-        const activeClass = "flex-1 sm:flex-none px-5 sm:px-6 py-2 rounded-lg text-xs font-black transition bg-blue-600 text-white shadow-md whitespace-nowrap";
+        const activeClass = "flex-1 sm:flex-none px-5 sm:px-6 py-2 rounded-lg text-xs font-black transition bg-blue-600 text-white shadow-md whitespace-nowrap cursor-pointer";
         const btn = document.getElementById(`daily-tab-${window.currentAgency}`);
         if (btn) btn.className = activeClass;
         
         fetchInspectorsList().then(() => { window.renderDailyPortal(false); });
     };
 
-    // 🚀 FIX: Run immediately. Do NOT wait for DOMContentLoaded in a dynamically loaded SPA!
     setTimeout(window.initDailyPortal, 50);
 
 </script>
