@@ -75,7 +75,7 @@
                 <p class="text-[11px] sm:text-xs font-bold text-slate-600 mt-1">Report Generated Date: <span id="summary-report-date"></span></p>
             </div>
 
-            <!-- ⚡ NEW: FAST TABLE TABS -->
+            <!-- ⚡ FAST TABLE TABS -->
             <div class="flex flex-wrap gap-2 justify-center mb-6 print:hidden border-b border-slate-100 pb-4">
                 <button onclick="switchSummaryTable('agency')" id="tab-btn-agency" class="px-4 py-2 rounded-lg text-xs font-black transition bg-blue-600 text-white shadow-md">Agency Level</button>
                 <button onclick="switchSummaryTable('inspector')" id="tab-btn-inspector" class="px-4 py-2 rounded-lg text-xs font-black transition bg-slate-50 text-slate-600 hover:bg-slate-200 border border-slate-200">Inspector Level</button>
@@ -93,24 +93,26 @@
                 </div>
                 <div id="agency-table-container" class="bg-white border border-slate-400 rounded-xl shadow-sm flex flex-col overflow-hidden">
                     <div class="overflow-x-auto w-full relative">
-                        <table class="w-full text-left text-xs border-collapse min-w-[850px]">
-                            <thead class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[10px] font-black z-10 shadow-sm border-b-2 border-slate-400">
+                        <table class="w-full text-left text-[10px] border-collapse min-w-[1000px]">
+                            <thead class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[9px] font-black z-10 shadow-sm border-b-2 border-slate-400">
                                 <tr>
-                                    <th class="p-3 border-r border-slate-300 text-center">S. no.</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Zone</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Circle</th>
-                                    <th class="p-3 border-r border-slate-300">DIVISION</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Total Calls</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Completed</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Prepared</th>
-                                    <th class="p-3 border-r border-slate-300 text-center text-amber-700">Unprepared</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Submitted</th>
-                                    <th class="p-3 border-r border-slate-300 text-center text-amber-700">Unsubmitted</th>
-                                    <th class="p-3 text-center">Billed</th>
+                                    <th class="p-2 border-r border-slate-300 text-center w-10">S.No</th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Zone</th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Circle</th>
+                                    <th class="p-2 border-r border-slate-300">Division</th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black">Tot. Calls</th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black text-emerald-700">Valid</th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black text-rose-700 leading-tight">Invalid<br><span class="text-[8px] font-bold text-rose-500">(Canc/Rev/Dup/Oth)</span></th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black text-blue-700 leading-tight">Completed<br><span class="text-[8px] font-bold text-blue-500">(On/Off/Prev)</span></th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Prep.</th>
+                                    <th class="p-2 border-r border-slate-300 text-center text-amber-700">Unprep.</th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Subm.</th>
+                                    <th class="p-2 border-r border-slate-300 text-center text-amber-700">Unsubm.</th>
+                                    <th class="p-2 text-center text-purple-700">Billed</th>
                                 </tr>
                             </thead>
                             <tbody id="summary-tbody" class="font-medium text-slate-800 align-middle">
-                                <tr><td colspan="11" class="p-12 text-center text-slate-500 font-bold border-b border-slate-300"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-blue-600 mx-auto"></i></td></tr>
+                                <tr><td colspan="13" class="p-12 text-center text-slate-500 font-bold border-b border-slate-300"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-blue-600 mx-auto"></i></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -130,26 +132,28 @@
                 </div>
                 <div id="inspector-table-container" class="bg-white border border-slate-400 rounded-xl shadow-sm flex flex-col overflow-hidden">
                     <div class="overflow-x-auto w-full relative">
-                        <table class="w-full text-left text-xs border-collapse min-w-[1000px]">
-                            <thead class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[10px] font-black z-10 shadow-sm border-b-2 border-slate-400">
+                        <table class="w-full text-left text-[10px] border-collapse min-w-[1100px]">
+                            <thead class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[9px] font-black z-10 shadow-sm border-b-2 border-slate-400">
                                 <tr>
-                                    <th class="p-3 border-r border-slate-300 text-center">S. no.</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Inspecting Engineer TPIA</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Zone</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Circle</th>
-                                    <th class="p-3 border-r border-slate-300">DIVISION</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Total Calls</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Completed</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Prepared</th>
-                                    <th class="p-3 border-r border-slate-300 text-center text-amber-700">Unprepared</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Submitted</th>
-                                    <th class="p-3 border-r border-slate-300 text-center text-amber-700">Unsubmitted</th>
-                                    <th class="p-3 border-r border-slate-300 text-center">Billed</th>
-                                    <th class="p-3 text-center text-blue-700 bg-blue-50/50">Total Mandays</th>
+                                    <th class="p-2 border-r border-slate-300 text-center w-10">S.No</th>
+                                    <th class="p-2 border-r border-slate-300 text-center w-24">Inspector (TPIA)</th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Zone</th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Circle</th>
+                                    <th class="p-2 border-r border-slate-300">Division</th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black">Tot. Calls</th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black text-emerald-700">Valid</th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black text-rose-700 leading-tight">Invalid<br><span class="text-[8px] font-bold text-rose-500">(Canc/Rev/Dup/Oth)</span></th>
+                                    <th class="p-2 border-r border-slate-300 text-center font-black text-blue-700 leading-tight">Completed<br><span class="text-[8px] font-bold text-blue-500">(On/Off/Prev)</span></th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Prep.</th>
+                                    <th class="p-2 border-r border-slate-300 text-center text-amber-700">Unprep.</th>
+                                    <th class="p-2 border-r border-slate-300 text-center">Subm.</th>
+                                    <th class="p-2 border-r border-slate-300 text-center text-amber-700">Unsubm.</th>
+                                    <th class="p-2 border-r border-slate-300 text-center text-purple-700">Billed</th>
+                                    <th class="p-2 text-center text-blue-700 bg-blue-50/50">Mandays</th>
                                 </tr>
                             </thead>
                             <tbody id="inspector-summary-tbody" class="font-medium text-slate-800 align-middle">
-                                <tr><td colspan="13" class="p-12 text-center text-slate-500 font-bold border-b border-slate-300"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-blue-600 mx-auto"></i></td></tr>
+                                <tr><td colspan="15" class="p-12 text-center text-slate-500 font-bold border-b border-slate-300"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-blue-600 mx-auto"></i></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -169,10 +173,10 @@
                 </div>
                 <div id="project-status-table-container" class="bg-white border border-slate-400 rounded-xl shadow-sm flex flex-col overflow-hidden">
                     <div class="overflow-x-auto w-full relative">
-                        <table class="w-full text-left text-xs border-collapse min-w-[850px]">
-                            <thead class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[10px] font-black z-10 shadow-sm border-b-2 border-slate-400">
+                        <table class="w-full text-left text-[10px] border-collapse min-w-[850px]">
+                            <thead class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[9px] font-black z-10 shadow-sm border-b-2 border-slate-400">
                                 <tr>
-                                    <th class="p-3 border-r border-slate-300 text-center">S. no.</th>
+                                    <th class="p-3 border-r border-slate-300 text-center w-10">S. no.</th>
                                     <th class="p-3 border-r border-slate-300 text-center">Zone</th>
                                     <th class="p-3 border-r border-slate-300 text-center">Circle</th>
                                     <th class="p-3 border-r border-slate-300">DIVISION</th>
@@ -203,8 +207,8 @@
                 </div>
                 <div id="call-status-table-container" class="bg-white border border-slate-400 rounded-xl shadow-sm flex flex-col overflow-hidden">
                     <div class="overflow-x-auto w-full relative">
-                        <table class="w-full text-left text-xs border-collapse min-w-[850px]">
-                            <thead id="call-status-thead" class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[10px] font-black z-10 shadow-sm border-b-2 border-slate-400">
+                        <table class="w-full text-left text-[10px] border-collapse min-w-[850px]">
+                            <thead id="call-status-thead" class="sticky top-0 bg-slate-100 text-slate-900 uppercase text-[9px] font-black z-10 shadow-sm border-b-2 border-slate-400">
                                 <!-- Dynamically generated headers -->
                             </thead>
                             <tbody id="call-status-summary-tbody" class="font-medium text-slate-800 align-middle">
@@ -245,34 +249,58 @@
     .pdf-export-active { 
         background: white !important; 
         width: 100% !important; 
-        min-width: 100% !important;
-        padding: 10px !important;
+        padding: 0 !important;
         margin: 0 !important; 
-        position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-        transform: none !important;
     }
     
-    .pdf-export-active .overflow-x-auto { overflow: visible !important; width: 100% !important; display: block !important; }
+    .pdf-export-active .overflow-x-auto { 
+        overflow: visible !important; 
+        width: 100% !important; 
+        display: block !important; 
+    }
     .pdf-export-active .print\:hidden { display: none !important; }
     .pdf-export-active .print\:block { display: block !important; }
     
-    /* Forces page breaks between sections when ALL tables are exported */
-    .pdf-export-active .pdf-page-break { display: block !important; page-break-before: always; break-before: page; height: 1px; margin-top: 30px; }
+    .pdf-export-active .pdf-page-break { 
+        display: block !important; 
+        page-break-before: always; 
+        break-before: page; 
+        height: 1px; 
+        margin-top: 30px; 
+    }
+    .pdf-export-active tr { 
+        page-break-inside: avoid !important; 
+        break-inside: avoid !important; 
+    }
     
-    .pdf-export-active tr { page-break-inside: avoid !important; break-inside: avoid !important; }
-    
-    .pdf-export-active table { 
+   /* 🚀 CRITICAL PDF EXPORT FIXES FOR CROPPING */
+   .pdf-export-active table, 
+    .pdf-export-active .min-w-\[850px\],
+    .pdf-export-active .min-w-\[900px\],
+    .pdf-export-active .min-w-\[1000px\],
+    .pdf-export-active .min-w-\[1100px\],
+    .pdf-export-active .min-w-\[1250px\] { 
         border-collapse: collapse !important; 
+        min-width: 0 !important;
+        max-width: 100% !important;
         width: 100% !important; 
-        font-size: 11px !important; 
+        font-size: 11px !important; /* 👈 INCREASE THIS VALUE (e.g., 9px, 10px, 11px) */
+        table-layout: auto !important; 
     }
     
     .pdf-export-active tr { border: none !important; }
+    
     .pdf-export-active th, .pdf-export-active td { 
         border: 1px solid #cbd5e1 !important; 
-        padding: 6px !important; 
+        padding: 3px 2px !important; 
+        white-space: normal !important; 
+        word-break: break-word !important; 
+        overflow-wrap: break-word !important;
+    }
+
+    /* Force any remaining tailwind nowrap classes to stack */
+    .pdf-export-active .whitespace-nowrap {
+        white-space: normal !important;
     }
     
     .pdf-export-active td[rowspan] { background-color: #ffffff !important; z-index: 10; position: relative; }
@@ -283,15 +311,39 @@
     .mobile-card-view tr { display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 8px 12px; width: 100%; box-sizing: border-box; }
     .mobile-card-view td { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border: none !important; text-align: right !important; font-size: 11px; }
     .mobile-card-view td::before { font-weight: 900; text-transform: uppercase; font-size: 9px; color: #475569; content: attr(data-label); text-align: left; padding-right: 8px; }
+
+
+/* 1. TABLE COLUMN HEADERS */
+.pdf-export-active th {
+        font-size: 11 px !important; /* 👈 Increase this for larger column names */
+    }
+
+    /* 2. SUB-TEXT INSIDE HEADERS (e.g., "(Canc/Rev/Dup/Oth)") */
+    .pdf-export-active th span {
+        font-size: 10px !important; /* 👈 Adjust this for the bracketed text */
+    }
+
+    /* 3. TABLE BODY DATA (The actual numbers/text) */
+    .pdf-export-active td {
+        font-size: 11px !important; /* 👈 Adjust the main data rows here */
+    }
+
+    /* 4. MAIN REPORT TITLE & SECTION TITLES */
+    .pdf-export-active h1 {
+        font-size: 16px !important; /* 👈 "INSPECTION SUMMARY REPORT" */
+    }
+    .pdf-export-active h3 {
+        font-size: 12px !important; /* 👈 "Agency-Level Hierarchical Summary" */
+    }
+
+
 </style>
 
 <script>
     // 🚀 GLOBAL & USER STATE
-    
     const activeSession = localStorage.getItem('portal_user');
     window.currentUser = activeSession ? JSON.parse(activeSession) : { role: "admin", name: "Admin", agency: "All" };
 
-    // 🚀 NEW: Determine allowed agencies based on user role and coordinator assignment
     window.allowedAgencies = window.AVAILABLE_AGENCIES;
     if (window.currentUser.role === 'coordinator' && Array.isArray(window.currentUser.agency)) {
         window.allowedAgencies = window.AVAILABLE_AGENCIES.filter(agency => window.currentUser.agency.includes(agency));
@@ -299,7 +351,6 @@
         window.allowedAgencies = [window.currentUser.agency];
     }
 
-    // Default to the first agency the user is actually allowed to see
     const defaultAgency = (window.allowedAgencies && window.allowedAgencies.length > 0) ? window.allowedAgencies[0] : "Equalitas";
 
     window.currentAgency = defaultAgency;
@@ -309,7 +360,6 @@
     window.activeSummaryTab = 'agency'; 
     const CACHE_EXPIRATION_MS = 10 * 60 * 1000; 
 
-    // --- Dynamic Agency Renderer ---
     window.renderSummaryAgencyTabs = function() {
         const container = document.getElementById('summary-agency-tabs-container');
         if (!container || !window.allowedAgencies) return;
@@ -331,7 +381,6 @@
         const activeClass = "flex-1 sm:flex-none px-5 sm:px-6 py-2 rounded-lg text-xs font-black transition bg-blue-600 text-white shadow-md whitespace-nowrap";
         const inactiveClass = "flex-1 sm:flex-none px-5 sm:px-6 py-2 rounded-lg text-xs font-black transition text-slate-500 hover:text-slate-800 hover:bg-slate-200 whitespace-nowrap cursor-pointer";
 
-        // Dynamically update active state only for allowed agency tabs
         window.allowedAgencies.forEach(agency => {
             const btn = document.getElementById(`sum-tab-${agency}`);
             if (btn) {
@@ -342,14 +391,11 @@
         await window.renderSummaryPortal();
     };
 
-    // ⚡ FIX: Super resilient row extractor that ignores ?, spaces, and case differences
     window.getRowValue = function(row, keyword) {
         if (!row) return null;
         let cleanKeyword = keyword.toLowerCase().replace(/\?/g, '').trim();
-        
         let exactKey = Object.keys(row).find(k => k.toLowerCase().replace(/\?/g, '').trim() === cleanKeyword);
         if (exactKey) return row[exactKey];
-        
         let includesKey = Object.keys(row).find(k => k.toLowerCase().replace(/\?/g, '').includes(cleanKeyword));
         return includesKey ? row[includesKey] : null;
     };
@@ -376,22 +422,60 @@
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
     }
 
-    function isCompletedStatus(val) {
+    // 🚀 NEW CLASSIFICATION HELPERS
+    window.getCallStatus = function(row) {
+        if (!row) return 'Pending';
+        const s = String(window.getRowValue(row, 'Call Status') || '').trim();
+        if (s === '' || s.toLowerCase() === 'null') return 'Pending';
+        // Capitalize the first letter for clean display in dynamic tabs
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    };
+
+    window.isCompletedStatus = function(val) {
         if (!val) return false;
         const str = String(val).trim().toLowerCase();
         return str !== "" && str !== "pending";
-    }
-    
-    // ⚡ FIX: Bulletproof Logic Rules
+    };
+
+    window.isInvalidCall = function(row) {
+        const s = window.getCallStatus(row).toLowerCase();
+        return ['cancelled', 'revised', 'revisied', 'duplicate', 'duplication', 'completed by other agency'].includes(s);
+    };
+
+    window.isCancelledCall = function(row) {
+        return window.getCallStatus(row).toLowerCase() === 'cancelled';
+    };
+
+    window.isRevisedCall = function(row) {
+        const s = window.getCallStatus(row).toLowerCase();
+        return s === 'revised' || s === 'revisied';
+    };
+
+    window.isDuplicateCall = function(row) {
+        const s = window.getCallStatus(row).toLowerCase();
+        return s === 'duplicate' || s === 'duplication';
+    };
+
+    window.isOtherAgencyCall = function(row) {
+        return window.getCallStatus(row).toLowerCase() === 'completed by other agency';
+    };
+
     window.isCallCompleted = function(row) {
         if (!row) return false;
-        const inspCompleted = String(window.getRowValue(row, 'Inspection Completed') || '').trim().toLowerCase();
-        const inspLog = String(window.getRowValue(row, 'Inspection Completion Log') || '').trim().toLowerCase();
-        const callStatus = String(window.getRowValue(row, 'Call Status') || '').trim().toLowerCase();
-        
-        return inspCompleted.startsWith('yes') && 
-               inspLog !== "" && inspLog !== "pending" && 
-               callStatus === 'completed';
+        const callStatus = window.getCallStatus(row).toLowerCase();
+        return ['completed', 'completed offline', 'previously completed offline'].includes(callStatus);
+    };
+
+    window.isCompOnlineCall = function(row) {
+        return window.isCallCompleted(row) && window.getCallStatus(row).toLowerCase() === 'completed';
+    };
+
+    window.isCompOfflineCall = function(row) {
+        return window.isCallCompleted(row) && window.getCallStatus(row).toLowerCase() === 'completed offline';
+    };
+
+    window.isPrevOfflineCall = function(row) {
+        return window.isCallCompleted(row) && window.getCallStatus(row).toLowerCase() === 'previously completed offline';
     };
 
     window.isCallPrepared = function(row) {
@@ -412,28 +496,19 @@
         return id;
     }
 
-    // ⚡ NEW: Dynamic Color Palette Generator for ANY Call Mode
+    // Dynamic Color Palette
     window.getDynamicBadgeStyle = function(text) {
         if (!text || text === 'Unassigned') return 'text-slate-500 bg-slate-50 border-slate-200';
-        
         const str = text.toLowerCase();
         if (str === 'online') return 'text-emerald-700 bg-emerald-50 border-emerald-200';
         if (str === 'offline') return 'text-slate-700 bg-slate-100 border-slate-300';
-        
         const palettes = [
-            'text-blue-700 bg-blue-50 border-blue-200',
-            'text-purple-700 bg-purple-50 border-purple-200',
-            'text-amber-700 bg-amber-50 border-amber-200',
-            'text-rose-700 bg-rose-50 border-rose-200',
-            'text-cyan-700 bg-cyan-50 border-cyan-200',
-            'text-indigo-700 bg-indigo-50 border-indigo-200',
+            'text-blue-700 bg-blue-50 border-blue-200', 'text-purple-700 bg-purple-50 border-purple-200',
+            'text-amber-700 bg-amber-50 border-amber-200', 'text-rose-700 bg-rose-50 border-rose-200',
+            'text-cyan-700 bg-cyan-50 border-cyan-200', 'text-indigo-700 bg-indigo-50 border-indigo-200',
             'text-orange-700 bg-orange-50 border-orange-200'
         ];
-        
-        let hash = 0;
-        for (let i = 0; i < text.length; i++) {
-            hash = text.charCodeAt(i) + ((hash << 5) - hash);
-        }
+        let hash = 0; for (let i = 0; i < text.length; i++) hash = text.charCodeAt(i) + ((hash << 5) - hash);
         return palettes[Math.abs(hash) % palettes.length];
     };
 
@@ -473,13 +548,12 @@
         const filename = `${window.currentAgency}_${window.activeSummaryTab}_summary_${new Date().toISOString().split('T')[0]}.pdf`;
         
         element.classList.add('pdf-export-active');
-        
         const opt = {
-            margin:       [0.4, 0.2, 0.3, 0.2], 
+            margin:       [0.3, 0.2, 0.3, 0.2], 
             filename:     filename,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, scrollX: 0, scrollY: 0, x: 0, windowWidth: element.scrollWidth },
-            jsPDF:        { unit: 'in', format: 'a3', orientation: 'landscape' },
+            html2canvas:  { scale: 2, useCORS: true }, 
+            jsPDF:        { unit: 'in', format: 'a2', orientation: 'landscape' }, // 👈 CHANGE 'a3' TO 'a2'
             pagebreak:    { mode: ['css', 'legacy'] }
         };
 
@@ -514,19 +588,15 @@
         const sections = ['agency', 'inspector', 'project', 'call'];
         sections.forEach(t => {
             const section = document.getElementById(`section-${t}`);
-            if (section) {
-                section.classList.remove('hidden');
-                section.classList.add('block');
-            }
+            if (section) { section.classList.remove('hidden'); section.classList.add('block'); }
         });
 
         element.classList.add('pdf-export-active');
-        
         const opt = {
-            margin:       [0.4, 0.2, 0.3, 0.2],
+            margin:       [0.3, 0.2, 0.3, 0.2],
             filename:     filename,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, scrollX: 0, scrollY: 0, x: 0, windowWidth: element.scrollWidth },
+            html2canvas:  { scale: 2, useCORS: true },
             jsPDF:        { unit: 'in', format: 'a3', orientation: 'landscape' },
             pagebreak:    { mode: ['css', 'legacy'] }
         };
@@ -536,21 +606,15 @@
             sections.forEach(t => {
                 const section = document.getElementById(`section-${t}`);
                 if (section) {
-                    if (t === window.activeSummaryTab) {
-                        section.classList.remove('hidden');
-                        section.classList.add('block');
-                    } else {
-                        section.classList.add('hidden');
-                        section.classList.remove('block');
-                    }
+                    if (t === window.activeSummaryTab) { section.classList.remove('hidden'); section.classList.add('block'); } 
+                    else { section.classList.add('hidden'); section.classList.remove('block'); }
                 }
             });
             document.body.style.cursor = 'default';
         };
 
         window.html2pdf().set(opt).from(element).save().then(restoreView).catch(err => {
-            console.error(err);
-            restoreView();
+            console.error(err); restoreView();
         });
     }
 
@@ -668,7 +732,7 @@
 
         window.cachedCallsData.forEach(row => {
             const rawValue = window.getRowValue(row, targetColumn);
-            if (isCompletedStatus(rawValue)) {
+            if (window.isCompletedStatus(rawValue)) {
                 const ym = getYearMonth(rawValue);
                 if (ym) uniqueMonths.add(ym);
             }
@@ -708,6 +772,7 @@
         statusTextSpan.textContent = `${labelPrefix} — ${selectedValueText}`;
     }
 
+    // 🚀 MASTER RENDER FUNCTION
     window.renderSummaryPortal = async function(forceRefresh = false) {
         window.drilldownCache = {}; 
 
@@ -725,7 +790,7 @@
 
         ['summary-tbody', 'inspector-summary-tbody', 'project-status-summary-tbody', 'call-status-summary-tbody'].forEach(id => {
             const tbody = document.getElementById(id);
-            if (tbody) tbody.innerHTML = `<tr><td colspan="15" class="p-12 text-center text-slate-500 font-bold border-b border-slate-300"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-blue-600 mx-auto"></i></td></tr>`;
+            if (tbody) tbody.innerHTML = `<tr><td colspan="22" class="p-12 text-center text-slate-500 font-bold border-b border-slate-300"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-blue-600 mx-auto"></i></td></tr>`;
         });
         if(window.lucide) window.lucide.createIcons();
 
@@ -749,13 +814,13 @@
         const data = window.cachedCallsData;
 
         const callStatusesSet = new Set();
-        data.forEach(row => { const cs = String(window.getRowValue(row, 'Call Status') || '').trim(); if (cs) callStatusesSet.add(cs); });
+        data.forEach(row => { const cs = window.getCallStatus(row); callStatusesSet.add(cs); });
         const dynamicCallStatuses = Array.from(callStatusesSet).sort();
 
         let theadHtml = `<tr>
-            <th class="p-3 border-r border-slate-300 text-center">S. no.</th><th class="p-3 border-r border-slate-300 text-center">Zone</th>
-            <th class="p-3 border-r border-slate-300 text-center">Circle</th><th class="p-3 border-r border-slate-300">DIVISION</th>
-            <th class="p-3 border-r border-slate-300 text-center text-blue-700 bg-blue-50/50">CALL MODE</th>`;
+            <th class="p-3 border-r border-slate-300 text-center col-sno">S. no.</th><th class="p-3 border-r border-slate-300 text-center col-zone">Zone</th>
+            <th class="p-3 border-r border-slate-300 text-center col-circle">Circle</th><th class="p-3 border-r border-slate-300 col-division">DIVISION</th>
+            <th class="p-3 border-r border-slate-300 text-center text-blue-700 bg-blue-50/50 col-mode">CALL MODE</th>`;
         dynamicCallStatuses.forEach(st => { theadHtml += `<th class="p-3 border-r border-slate-300 text-center text-slate-700">${st}</th>`; });
         theadHtml += `<th class="p-3 text-center">Total Calls</th></tr>`;
         document.getElementById('call-status-thead').innerHTML = theadHtml;
@@ -764,10 +829,16 @@
             const agencyGrouped = {}; const inspectorGrouped = {}; const inspectorMandaysSum = {}; 
             const projectStatusGrouped = {}; const callStatusGrouped = {};
 
+            const initBucket = () => ({
+                total: 0, valid: 0, invalid: 0, cancelled: 0, revised: 0, duplicate: 0, otherAgency: 0,
+                completed: 0, compOnline: 0, compOffline: 0, prevOffline: 0,
+                prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: []
+            });
+
             data.forEach(row => {
                 if (monthFilter !== "ALL") {
                     const rawVal = window.getRowValue(row, targetColumn);
-                    if (!isCompletedStatus(rawVal) || getYearMonth(rawVal) !== monthFilter) return; 
+                    if (!window.isCompletedStatus(rawVal) || getYearMonth(rawVal) !== monthFilter) return; 
                 }
                 
                 const z = String(window.getRowValue(row, 'Zone') || '').trim() || 'Unassigned Zone';
@@ -775,21 +846,38 @@
                 const d = String(window.getRowValue(row, 'Division') || '').trim() || 'Unassigned Division';
                 const inspector = String(window.getRowValue(row, 'Inspecting Engineer TPIA') || '').trim() || 'Unassigned Inspector';
                 
+                // --- AGENCY LOGIC ---
                 if (!agencyGrouped[z]) agencyGrouped[z] = {};
                 if (!agencyGrouped[z][c]) agencyGrouped[z][c] = {};
-                if (!agencyGrouped[z][c][d]) agencyGrouped[z][c][d] = { total: 0, completed: 0, prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: [] };
+                if (!agencyGrouped[z][c][d]) agencyGrouped[z][c][d] = initBucket();
                 const agBucket = agencyGrouped[z][c][d];
-                agBucket.total++;
                 
-                if (window.isCallCompleted(row)) agBucket.completed++;
+                agBucket.total++;
+                agBucket.rows.push(row);
+
+                if(window.isInvalidCall(row)) agBucket.invalid++;
+                if(window.isCancelledCall(row)) agBucket.cancelled++;
+                if(window.isRevisedCall(row)) agBucket.revised++;
+                if(window.isDuplicateCall(row)) agBucket.duplicate++;
+                if(window.isOtherAgencyCall(row)) agBucket.otherAgency++;
+                
+                agBucket.valid = agBucket.total - agBucket.invalid;
+
+                if(window.isCallCompleted(row)) {
+                    agBucket.completed++;
+                    if(window.isCompOfflineCall(row)) agBucket.compOffline++;
+                    else if(window.isPrevOfflineCall(row)) agBucket.prevOffline++;
+                    else agBucket.compOnline++;
+                }
+
                 if (window.isCallPrepared(row)) agBucket.prepared++;
                 if (window.isCallSubmitted(row)) agBucket.submitted++;
-                if (isCompletedStatus(window.getRowValue(row, 'Billed to DISCOM Date'))) agBucket.billed++;
+                if (window.isCompletedStatus(window.getRowValue(row, 'Billed to DISCOM Date'))) agBucket.billed++;
                 
                 agBucket.unprepared = Math.max(0, agBucket.completed - agBucket.prepared);
                 agBucket.unsubmitted = Math.max(0, agBucket.prepared - agBucket.submitted);
-                agBucket.rows.push(row);
 
+                // --- INSPECTOR LOGIC ---
                 const mandaysStr = String(window.getRowValue(row, 'Calculated Mandays') || '');
                 const match = mandaysStr.match(/total\s*[:=]\s*([0-9.]+)/i);
                 const callMandays = match ? parseFloat(match[1]) || 0 : 0;
@@ -798,19 +886,35 @@
                 if (!inspectorGrouped[inspector]) inspectorGrouped[inspector] = {};
                 if (!inspectorGrouped[inspector][z]) inspectorGrouped[inspector][z] = {};
                 if (!inspectorGrouped[inspector][z][c]) inspectorGrouped[inspector][z][c] = {};
-                if (!inspectorGrouped[inspector][z][c][d]) inspectorGrouped[inspector][z][c][d] = { total: 0, completed: 0, prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: [] };
+                if (!inspectorGrouped[inspector][z][c][d]) inspectorGrouped[inspector][z][c][d] = initBucket();
                 const inBucket = inspectorGrouped[inspector][z][c][d];
+                
                 inBucket.total++;
+                inBucket.rows.push(row);
 
-                if (window.isCallCompleted(row)) inBucket.completed++;
+                if(window.isInvalidCall(row)) inBucket.invalid++;
+                if(window.isCancelledCall(row)) inBucket.cancelled++;
+                if(window.isRevisedCall(row)) inBucket.revised++;
+                if(window.isDuplicateCall(row)) inBucket.duplicate++;
+                if(window.isOtherAgencyCall(row)) inBucket.otherAgency++;
+                
+                inBucket.valid = inBucket.total - inBucket.invalid;
+
+                if(window.isCallCompleted(row)) {
+                    inBucket.completed++;
+                    if(window.isCompOfflineCall(row)) inBucket.compOffline++;
+                    else if(window.isPrevOfflineCall(row)) inBucket.prevOffline++;
+                    else inBucket.compOnline++;
+                }
+
                 if (window.isCallPrepared(row)) inBucket.prepared++;
                 if (window.isCallSubmitted(row)) inBucket.submitted++;
-                if (isCompletedStatus(window.getRowValue(row, 'Billed to DISCOM Date'))) inBucket.billed++;
+                if (window.isCompletedStatus(window.getRowValue(row, 'Billed to DISCOM Date'))) inBucket.billed++;
                 
                 inBucket.unprepared = Math.max(0, inBucket.completed - inBucket.prepared);
                 inBucket.unsubmitted = Math.max(0, inBucket.prepared - inBucket.submitted);
-                inBucket.rows.push(row);
 
+                // --- PROJECT LOGIC ---
                 const pStatus = String(window.getRowValue(row, 'Project Status') || '').trim().toUpperCase();
                 if (!projectStatusGrouped[z]) projectStatusGrouped[z] = {};
                 if (!projectStatusGrouped[z][c]) projectStatusGrouped[z][c] = {};
@@ -822,7 +926,8 @@
                 else if (pStatus.includes('PART-B')) { psBucket.partB++; psBucket.rowsB.push(row); }
                 else if (pStatus.includes('PART-C')) { psBucket.partC++; psBucket.rowsC.push(row); }
 
-                const callStatusVal = String(window.getRowValue(row, 'Call Status') || '').trim();
+                // --- CALL STATUS LOGIC ---
+                const callStatusVal = window.getCallStatus(row);
                 const callModeVal = String(window.getRowValue(row, 'Call Mode') || 'Unassigned').trim();
                 const d_mode = d + `|#|` + callModeVal; 
                 if (!callStatusGrouped[z]) callStatusGrouped[z] = {};
@@ -841,24 +946,48 @@
                 }
             });
             
-            renderHierarchicalTableWithTotals(document.getElementById('summary-tbody'), agencyGrouped, window.currentAgency);
+            renderHierarchicalTableWithTotals(document.getElementById('summary-tbody'), agencyGrouped);
             renderInspectorTableWithTotals(document.getElementById('inspector-summary-tbody'), inspectorGrouped, inspectorMandaysSum);
-            renderProjectStatusHierarchicalTableWithTotals(document.getElementById('project-status-summary-tbody'), projectStatusGrouped, window.currentAgency);
+            renderProjectStatusHierarchicalTableWithTotals(document.getElementById('project-status-summary-tbody'), projectStatusGrouped);
             renderCallStatusHierarchicalTableWithTotals(document.getElementById('call-status-summary-tbody'), callStatusGrouped, dynamicCallStatuses);
         });
     };
 
-    function renderHierarchicalTableWithTotals(tbody, groupedData, primaryLabel) {
-        const flatRows = []; let sno = 1; let grandTotals = { total: 0, completed: 0, prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: [] };
+    // 🚀 NEW HELPER TO AVOID CODE DUPLICATION
+    const buildCells = (m, r, prefix, isGrandTotal = false) => {
+        const mainColor = isGrandTotal ? 'text-blue-900' : 'text-blue-800';
+        return `
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold ${mainColor} cursor-pointer hover:underline" onclick="window.openDrilldownModal('${prefix} - Total Calls', '${storeDrilldown(r)}')">${m.total}</td>
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold text-emerald-700 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${prefix} - Valid', '${storeDrilldown(r.filter(x => !window.isInvalidCall(x)))}')">${m.valid}</td>
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold text-rose-700 cursor-pointer hover:bg-rose-50 col-invalid" onclick="window.openDrilldownModal('${prefix} - Invalid', '${storeDrilldown(r.filter(x => window.isInvalidCall(x)))}')">
+                ${m.invalid} <br><span class="text-[7px] font-black text-rose-400 leading-none">(${m.cancelled}/${m.revised}/${m.duplicate}/${m.otherAgency})</span>
+            </td>
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold text-blue-700 cursor-pointer hover:bg-blue-50 col-completed" onclick="window.openDrilldownModal('${prefix} - Completed', '${storeDrilldown(r.filter(x => window.isCallCompleted(x)))}')">
+                ${m.completed} <br><span class="text-[7px] font-black text-blue-400 leading-none">(${m.compOnline}/${m.compOffline}/${m.prevOffline})</span>
+            </td>
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold cursor-pointer hover:underline" onclick="window.openDrilldownModal('${prefix} - Prepared', '${storeDrilldown(r.filter(x => window.isCallPrepared(x)))}')">${m.prepared}</td>
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold text-amber-600 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${prefix} - Unprepared', '${storeDrilldown(r.filter(x => window.isCallCompleted(x) && !window.isCallPrepared(x)))}')">${m.unprepared}</td>
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold cursor-pointer hover:underline" onclick="window.openDrilldownModal('${prefix} - Submitted', '${storeDrilldown(r.filter(x => window.isCallSubmitted(x)))}')">${m.submitted}</td>
+            <td class="p-2 border-r border-b border-slate-300 text-center font-bold text-amber-600 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${prefix} - Unsubmitted', '${storeDrilldown(r.filter(x => window.isCallPrepared(x) && !window.isCallSubmitted(x)))}')">${m.unsubmitted}</td>
+            <td class="p-2 border-b border-slate-300 text-center font-bold text-purple-700 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${prefix} - Billed', '${storeDrilldown(r.filter(x => window.isCompletedStatus(window.getRowValue(x,'Billed to DISCOM Date'))))}')">${m.billed}</td>
+        `;
+    };
+
+    function renderHierarchicalTableWithTotals(tbody, groupedData) {
+        const flatRows = []; let sno = 1; 
+        const KEYS = ['total', 'valid', 'invalid', 'cancelled', 'revised', 'duplicate', 'otherAgency', 'completed', 'compOnline', 'compOffline', 'prevOffline', 'prepared', 'unprepared', 'submitted', 'unsubmitted', 'billed'];
+        let grandTotals = { rows: [] }; KEYS.forEach(k => grandTotals[k] = 0);
+        
         for (const z of Object.keys(groupedData).sort()) {
             const circles = groupedData[z]; const zKey = flatRows.length; let zCount = 0;
-            let zoneTotals = { total: 0, completed: 0, prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: [] };
+            let zoneTotals = { rows: [] }; KEYS.forEach(k => zoneTotals[k] = 0);
+            
             for (const c of Object.keys(circles).sort()) {
                 const divs = circles[c]; const cKey = flatRows.length; let cCount = 0;
                 for (const d of Object.keys(divs).sort()) {
                     const m = divs[d]; flatRows.push({ type: 'data', zone: z, circle: c, division: d, metrics: m, zRowspan: 0, cRowspan: 0, sno: null });
                     zCount++; cCount++;
-                    ['total', 'completed', 'prepared', 'unprepared', 'submitted', 'unsubmitted', 'billed'].forEach(k => { zoneTotals[k] += m[k]; grandTotals[k] += m[k]; });
+                    KEYS.forEach(k => { zoneTotals[k] += m[k]; grandTotals[k] += m[k]; });
                     zoneTotals.rows = zoneTotals.rows.concat(m.rows); grandTotals.rows = grandTotals.rows.concat(m.rows);
                 }
                 flatRows[cKey].cRowspan = cCount;
@@ -866,44 +995,26 @@
             flatRows.push({ type: 'zoneTotal', zone: z, metrics: zoneTotals }); zCount++; flatRows[zKey].zRowspan = zCount; flatRows[zKey].sno = sno++;
         }
         if (flatRows.length > 0) flatRows.push({ type: 'grandTotal', metrics: grandTotals });
-        if (flatRows.length === 0) { tbody.innerHTML = '<tr><td colspan="11" class="p-12 text-center text-slate-400 font-bold border-b border-slate-300">No data found.</td></tr>'; return; }
+        if (flatRows.length === 0) { tbody.innerHTML = '<tr><td colspan="13" class="p-12 text-center text-slate-400 font-bold border-b border-slate-300">No data found.</td></tr>'; return; }
 
         const fragment = document.createDocumentFragment();
         flatRows.forEach((row) => {
             const tr = document.createElement('tr'); let html = '';
             if (row.type === 'grandTotal') {
-                tr.className = "bg-blue-100 font-bold break-inside-avoid"; const m = row.metrics;
-                html += `<td colspan="4" class="p-3 border-r border-b border-slate-300 text-right font-black text-blue-900 uppercase tracking-wider">Grand Total</td>`;
-                html += `<td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total - Total Calls', '${storeDrilldown(m.rows)}')">${m.total}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total - Completed', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r)))}')">${m.completed}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total - Prepared', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r)))}')">${m.prepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total - Unprepared', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r) && !window.isCallPrepared(r)))}')">${m.unprepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total - Submitted', '${storeDrilldown(m.rows.filter(r => window.isCallSubmitted(r)))}')">${m.submitted}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total - Unsubmitted', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r) && !window.isCallSubmitted(r)))}')">${m.unsubmitted}</td>
-                    <td class="p-3 border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total - Billed', '${storeDrilldown(m.rows.filter(r => isCompletedStatus(window.getRowValue(r,'Billed to DISCOM Date'))))}')">${m.billed}</td>`;
+                tr.className = "bg-blue-100 font-bold break-inside-avoid"; 
+                html += `<td colspan="4" class="p-2 border-r border-b border-slate-300 text-right font-black text-blue-900 uppercase tracking-wider">Grand Total</td>`;
+                html += buildCells(row.metrics, row.metrics.rows, 'Grand Total', true);
                 tr.innerHTML = html; fragment.appendChild(tr); return;
             }
             tr.className = row.type === 'data' ? "hover:bg-slate-50 transition break-inside-avoid" : "bg-blue-50 transition break-inside-avoid";
-            if (row.zRowspan > 0) { html += `<td rowspan="${row.zRowspan}" class="p-3 border-r border-b border-slate-300 text-center font-bold bg-white">${row.sno}</td><td rowspan="${row.zRowspan}" class="p-3 border-r border-b border-slate-300 text-center font-bold bg-white">${row.zone}</td>`; }
+            if (row.zRowspan > 0) { html += `<td rowspan="${row.zRowspan}" class="p-2 border-r border-b border-slate-300 text-center font-bold bg-white">${row.sno}</td><td rowspan="${row.zRowspan}" class="p-2 border-r border-b border-slate-300 text-center font-bold bg-white">${row.zone}</td>`; }
             if (row.type === 'zoneTotal') {
-                const m = row.metrics; html += `<td colspan="2" class="p-3 border-r border-b border-slate-300 text-right font-black text-blue-800 uppercase tracking-wider">Zone Total (${row.zone})</td>`;
-                html += `<td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Total Calls', '${storeDrilldown(m.rows)}')">${m.total}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Completed', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r)))}')">${m.completed}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Prepared', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r)))}')">${m.prepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Unprepared', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r) && !window.isCallPrepared(r)))}')">${m.unprepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Submitted', '${storeDrilldown(m.rows.filter(r => window.isCallSubmitted(r)))}')">${m.submitted}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Unsubmitted', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r) && !window.isCallSubmitted(r)))}')">${m.unsubmitted}</td>
-                    <td class="p-3 border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Billed', '${storeDrilldown(m.rows.filter(r => isCompletedStatus(window.getRowValue(r,'Billed to DISCOM Date'))))}')">${m.billed}</td>`;
+                html += `<td colspan="2" class="p-2 border-r border-b border-slate-300 text-right font-black text-blue-800 uppercase tracking-wider">Zone Total (${row.zone})</td>`;
+                html += buildCells(row.metrics, row.metrics.rows, `Zone ${row.zone}`, false);
             } else {
-                if (row.cRowspan > 0) html += `<td rowspan="${row.cRowspan}" class="p-3 border-r border-b border-slate-300 text-center bg-white">${row.circle}</td>`;
-                const m = row.metrics; html += `<td class="p-3 border-r border-b border-slate-300">${row.division}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Total Calls', '${storeDrilldown(m.rows)}')" class="cursor-pointer text-blue-600 hover:underline font-bold">${m.total}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Completed Calls', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r)))}')" class="cursor-pointer text-green-600 hover:underline font-bold">${m.completed}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Prepared Reports', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r)))}')" class="cursor-pointer text-blue-600 hover:underline font-bold">${m.prepared}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Unprepared Reports', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r) && !window.isCallPrepared(r)))}')" class="cursor-pointer text-amber-600 hover:underline font-bold">${m.unprepared}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Submitted Reports', '${storeDrilldown(m.rows.filter(r => window.isCallSubmitted(r)))}')" class="cursor-pointer text-blue-600 hover:underline font-bold">${m.submitted}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Unsubmitted Reports', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r) && !window.isCallSubmitted(r)))}')" class="cursor-pointer text-amber-600 hover:underline font-bold">${m.unsubmitted}</span></td>
-                    <td class="p-3 border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Billed Calls', '${storeDrilldown(m.rows.filter(r => isCompletedStatus(window.getRowValue(r,'Billed to DISCOM Date'))))}')" class="cursor-pointer text-purple-600 hover:underline font-bold">${m.billed}</span></td>`;
+                if (row.cRowspan > 0) html += `<td rowspan="${row.cRowspan}" class="p-2 border-r border-b border-slate-300 text-center bg-white">${row.circle}</td>`;
+                html += `<td class="p-2 border-r border-b border-slate-300">${row.division}</td>`;
+                html += buildCells(row.metrics, row.metrics.rows, `${row.division}`, false);
             }
             tr.innerHTML = html; fragment.appendChild(tr);
         });
@@ -911,19 +1022,23 @@
     }
 
     function renderInspectorTableWithTotals(tbody, groupedData, inspectorMandaysSum) {
-        const flatRows = []; let sno = 1; let grandTotals = { total: 0, completed: 0, prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: [], totalMandays: 0 };
+        const flatRows = []; let sno = 1; 
+        const KEYS = ['total', 'valid', 'invalid', 'cancelled', 'revised', 'duplicate', 'otherAgency', 'completed', 'compOnline', 'compOffline', 'prevOffline', 'prepared', 'unprepared', 'submitted', 'unsubmitted', 'billed'];
+        let grandTotals = { rows: [], totalMandays: 0 }; KEYS.forEach(k => grandTotals[k] = 0);
+        
         for (const inspector of Object.keys(groupedData).sort()) {
             const zones = groupedData[inspector]; const inspKey = flatRows.length; let inspTotalCount = 0;
-            let inspTotals = { total: 0, completed: 0, prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: [], totalMandays: inspectorMandaysSum[inspector] || 0 };
+            let inspTotals = { rows: [], totalMandays: inspectorMandaysSum[inspector] || 0 }; KEYS.forEach(k => inspTotals[k] = 0);
+            
             for (const z of Object.keys(zones).sort()) {
                 const circles = zones[z]; const zKey = flatRows.length; let zCount = 0;
-                let zoneTotals = { total: 0, completed: 0, prepared: 0, unprepared: 0, submitted: 0, unsubmitted: 0, billed: 0, rows: [] };
+                let zoneTotals = { rows: [] }; KEYS.forEach(k => zoneTotals[k] = 0);
                 for (const c of Object.keys(circles).sort()) {
                     const divs = circles[c]; const cKey = flatRows.length; let cCount = 0;
                     for (const d of Object.keys(divs).sort()) {
                         const m = divs[d]; flatRows.push({ type: 'data', inspector, zone: z, circle: c, division: d, metrics: m, inspRowspan: 0, zRowspan: 0, cRowspan: 0, sno: null, totalMandays: inspTotals.totalMandays });
                         inspTotalCount++; zCount++; cCount++;
-                        ['total', 'completed', 'prepared', 'unprepared', 'submitted', 'unsubmitted', 'billed'].forEach(k => { zoneTotals[k] += m[k]; inspTotals[k] += m[k]; grandTotals[k] += m[k]; });
+                        KEYS.forEach(k => { zoneTotals[k] += m[k]; inspTotals[k] += m[k]; grandTotals[k] += m[k]; });
                         zoneTotals.rows = zoneTotals.rows.concat(m.rows); inspTotals.rows = inspTotals.rows.concat(m.rows); grandTotals.rows = grandTotals.rows.concat(m.rows);
                     }
                     flatRows[cKey].cRowspan = cCount;
@@ -932,55 +1047,38 @@
             }
             grandTotals.totalMandays += inspTotals.totalMandays; flatRows[inspKey].inspRowspan = inspTotalCount; flatRows[inspKey].sno = sno++;
         }
+        
         if (flatRows.length > 0) flatRows.push({ type: 'grandTotal', metrics: grandTotals });
-        if (flatRows.length === 0) { tbody.innerHTML = '<tr><td colspan="13" class="p-12 text-center text-slate-400 font-bold border-b border-slate-300">No inspector data found.</td></tr>'; return; }
+        if (flatRows.length === 0) { tbody.innerHTML = '<tr><td colspan="15" class="p-12 text-center text-slate-400 font-bold border-b border-slate-300">No inspector data found.</td></tr>'; return; }
 
         const fragment = document.createDocumentFragment();
         flatRows.forEach((row) => {
             const tr = document.createElement('tr'); let html = '';
             if (row.type === 'grandTotal') {
                 tr.className = "bg-blue-100 font-bold break-inside-avoid"; const m = row.metrics;
-                html += `<td colspan="5" class="p-3 border-r border-b border-slate-300 text-right font-black text-blue-900 uppercase tracking-wider">Grand Total</td>`;
-                html += `<td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total Calls', '${storeDrilldown(m.rows)}')">${m.total}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total Completed', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r)))}')">${m.completed}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total Prepared', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r)))}')">${m.prepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total Unprepared', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r) && !window.isCallPrepared(r)))}')">${m.unprepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total Submitted', '${storeDrilldown(m.rows.filter(r => window.isCallSubmitted(r)))}')">${m.submitted}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total Unsubmitted', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r) && !window.isCallSubmitted(r)))}')">${m.unsubmitted}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-black text-blue-900 cursor-pointer hover:underline" onclick="window.openDrilldownModal('Grand Total Billed', '${storeDrilldown(m.rows.filter(r => isCompletedStatus(window.getRowValue(r,'Billed to DISCOM Date'))))}')">${m.billed}</td>
-                    <td class="p-3 border-b border-slate-300 text-center font-mono font-black text-blue-900">${m.totalMandays.toFixed(2)}</td>`;
+                html += `<td colspan="5" class="p-2 border-r border-b border-slate-300 text-right font-black text-blue-900 uppercase tracking-wider">Grand Total</td>`;
+                html += buildCells(m, m.rows, 'Grand Total', true);
+                html += `<td class="p-2 border-b border-slate-300 text-center font-mono font-black text-blue-900">${m.totalMandays.toFixed(2)}</td>`;
                 tr.innerHTML = html; fragment.appendChild(tr); return;
             }
             tr.className = row.type === 'data' ? "hover:bg-slate-50 transition break-inside-avoid" : "bg-blue-50 transition break-inside-avoid";
-            if (row.inspRowspan > 0) { html += `<td rowspan="${row.inspRowspan}" class="p-3 border-r border-b border-slate-300 text-center font-bold bg-white">${row.sno}</td><td rowspan="${row.inspRowspan}" class="p-3 border-r border-b border-slate-300 text-center font-black bg-white">${row.inspector}</td>`; }
-            if (row.zRowspan > 0) { html += `<td rowspan="${row.zRowspan}" class="p-3 border-r border-b border-slate-300 text-center font-bold bg-white">${row.zone}</td>`; }
+            if (row.inspRowspan > 0) { html += `<td rowspan="${row.inspRowspan}" class="p-2 border-r border-b border-slate-300 text-center font-bold bg-white">${row.sno}</td><td rowspan="${row.inspRowspan}" class="p-2 border-r border-b border-slate-300 text-center font-black bg-white">${row.inspector}</td>`; }
+            if (row.zRowspan > 0) { html += `<td rowspan="${row.zRowspan}" class="p-2 border-r border-b border-slate-300 text-center font-bold bg-white">${row.zone}</td>`; }
             if (row.type === 'zoneTotal') {
-                const m = row.metrics; html += `<td colspan="2" class="p-3 border-r border-b border-slate-300 text-right font-black text-blue-800 uppercase tracking-wider">Zone Total (${row.zone})</td>`;
-                html += `<td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Total Calls', '${storeDrilldown(m.rows)}')">${m.total}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Completed', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r)))}')">${m.completed}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Prepared', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r)))}')">${m.prepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Unprepared', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r) && !window.isCallPrepared(r)))}')">${m.unprepared}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Submitted', '${storeDrilldown(m.rows.filter(r => window.isCallSubmitted(r)))}')">${m.submitted}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Unsubmitted', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r) && !window.isCallSubmitted(r)))}')">${m.unsubmitted}</td>
-                    <td class="p-3 border-b border-slate-300 text-center font-bold text-blue-800 cursor-pointer hover:underline" onclick="window.openDrilldownModal('${row.zone} - Billed', '${storeDrilldown(m.rows.filter(r => isCompletedStatus(window.getRowValue(r,'Billed to DISCOM Date'))))}')">${m.billed}</td>`;
+                html += `<td colspan="2" class="p-2 border-r border-b border-slate-300 text-right font-black text-blue-800 uppercase tracking-wider">Zone Total (${row.zone})</td>`;
+                html += buildCells(row.metrics, row.metrics.rows, `${row.inspector} - ${row.zone}`, false);
             } else {
-                if (row.cRowspan > 0) html += `<td rowspan="${row.cRowspan}" class="p-3 border-r border-b border-slate-300 text-center bg-white">${row.circle}</td>`;
-                const m = row.metrics; html += `<td class="p-3 border-r border-b border-slate-300">${row.division}</td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Total Calls', '${storeDrilldown(m.rows)}')" class="cursor-pointer text-blue-600 hover:underline font-bold">${m.total}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Completed Calls', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r)))}')" class="cursor-pointer text-green-600 hover:underline font-bold">${m.completed}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Prepared Reports', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r)))}')" class="cursor-pointer text-blue-600 hover:underline font-bold">${m.prepared}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Unprepared Reports', '${storeDrilldown(m.rows.filter(r => window.isCallCompleted(r) && !window.isCallPrepared(r)))}')" class="cursor-pointer text-amber-600 hover:underline font-bold">${m.unprepared}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Submitted Reports', '${storeDrilldown(m.rows.filter(r => window.isCallSubmitted(r)))}')" class="cursor-pointer text-blue-600 hover:underline font-bold">${m.submitted}</span></td>
-                    <td class="p-3 border-r border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Unsubmitted Reports', '${storeDrilldown(m.rows.filter(r => window.isCallPrepared(r) && !window.isCallSubmitted(r)))}')" class="cursor-pointer text-amber-600 hover:underline font-bold">${m.unsubmitted}</span></td>
-                    <td class="p-3 border-b border-slate-300 text-center"><span onclick="window.openDrilldownModal('${row.division} - Billed Calls', '${storeDrilldown(m.rows.filter(r => isCompletedStatus(window.getRowValue(r,'Billed to DISCOM Date'))))}')" class="cursor-pointer text-purple-600 hover:underline font-bold">${m.billed}</span></td>`;
+                if (row.cRowspan > 0) html += `<td rowspan="${row.cRowspan}" class="p-2 border-r border-b border-slate-300 text-center bg-white">${row.circle}</td>`;
+                html += `<td class="p-2 border-r border-b border-slate-300">${row.division}</td>`;
+                html += buildCells(row.metrics, row.metrics.rows, `${row.inspector} - ${row.division}`, false);
             }
-            if (row.inspRowspan > 0) { html += `<td rowspan="${row.inspRowspan}" class="p-3 border-b border-slate-300 text-center font-mono font-black text-blue-700 bg-blue-50/50">${row.totalMandays.toFixed(2)}</td>`; }
+            if (row.inspRowspan > 0) { html += `<td rowspan="${row.inspRowspan}" class="p-2 border-b border-slate-300 text-center font-mono font-black text-blue-700 bg-blue-50/50">${row.totalMandays.toFixed(2)}</td>`; }
             tr.innerHTML = html; fragment.appendChild(tr);
         });
         tbody.innerHTML = ''; tbody.appendChild(fragment);
     }
 
-    function renderProjectStatusHierarchicalTableWithTotals(tbody, groupedData, primaryLabel) {
+    function renderProjectStatusHierarchicalTableWithTotals(tbody, groupedData) {
         const flatRows = []; let sno = 1; let grandTotals = { partA: 0, partB: 0, partC: 0, total: 0, rowsA: [], rowsB: [], rowsC: [], rowsTotal: [] };
         for (const z of Object.keys(groupedData).sort()) {
             const circles = groupedData[z]; const zKey = flatRows.length; let zCount = 0;
@@ -1078,7 +1176,6 @@
                 if (row.cRowspan > 0) html += `<td rowspan="${row.cRowspan}" class="p-3 border-r border-b border-slate-300 text-center bg-white">${row.circle}</td>`;
                 const m = row.metrics; html += `<td class="p-3 border-r border-b border-slate-300">${row.division}</td>`;
                 
-                // ⚡ FIX: Use the new dynamic color badge generator!
                 let modeColor = window.getDynamicBadgeStyle(row.callMode);
                 
                 html += `<td class="p-3 border-r border-b border-slate-300 text-center"><span class="px-2 py-1 rounded text-[9px] font-black uppercase border shadow-sm ${modeColor}">${row.callMode}</span></td>`;
@@ -1102,16 +1199,19 @@
         } else {
             let tableHTML = `<table class="w-full text-left text-xs border-collapse">
                 <thead class="bg-slate-100 text-slate-700 uppercase text-[10px] font-black border-b border-slate-200">
-                    <tr><th class="p-3 border-r border-slate-200">Inspection Code</th><th class="p-3 border-r border-slate-200">Inspector (TPIA)</th><th class="p-3 border-r border-slate-200">Division</th><th class="p-3 border-r border-slate-200">Work Description</th><th class="p-3 text-center">Action</th></tr>
+                    <tr><th class="p-3 border-r border-slate-200">Inspection Code</th><th class="p-3 border-r border-slate-200 text-center">Status</th><th class="p-3 border-r border-slate-200">Inspector (TPIA)</th><th class="p-3 border-r border-slate-200">Division</th><th class="p-3 border-r border-slate-200">Work Description</th><th class="p-3 text-center">Action</th></tr>
                 </thead><tbody class="font-medium text-slate-700">`;
             rows.forEach(r => {
                 const encodedR = encodeURIComponent(JSON.stringify(r));
+                const status = window.getCallStatus(r);
+                const colorClass = window.getDynamicBadgeStyle(status);
                 tableHTML += `<tr>
                     <td class="p-3 border-r border-b border-slate-100 font-bold text-blue-600 cursor-pointer hover:underline" onclick="window.openSingleInspectionDetails('${encodedR}')">${window.getRowValue(r,'Inspection Code') || 'N/A'}</td>
+                    <td class="p-3 border-r border-b border-slate-100 text-center"><span class="px-2 py-0.5 rounded text-[8px] font-black uppercase border shadow-sm ${colorClass}">${status}</span></td>
                     <td class="p-3 border-r border-b border-slate-100 font-bold">${window.getRowValue(r,'Inspecting Engineer TPIA') || 'Unassigned'}</td>
                     <td class="p-3 border-r border-b border-slate-100">${window.getRowValue(r,'Division') || '-'}</td>
                     <td class="p-3 border-r border-b border-slate-100">${window.getRowValue(r,'Description of Work') || '-'}</td>
-                    <td class="p-3 border-b border-slate-100 text-center"><button onclick="window.openSingleInspectionDetails('${encodedR}')" class="px-3 py-1 bg-slate-900 text-white rounded-lg text-[10px] font-bold cursor-pointer">View</button></td>
+                    <td class="p-3 border-b border-slate-100 text-center"><button onclick="window.openSingleInspectionDetails('${encodedR}')" class="px-3 py-1 bg-slate-900 text-white rounded-lg text-[10px] font-bold cursor-pointer hover:bg-slate-800 transition shadow-sm">View</button></td>
                 </tr>`;
             });
             contentEl.innerHTML = tableHTML + `</tbody></table>`;
@@ -1146,15 +1246,13 @@
         
         window.renderSummaryAgencyTabs();
         
-        // Force the initial active state manually so it loads data immediately
-        const activeClass = "flex-1 sm:flex-none px-5 sm:px-6 py-2 rounded-lg text-xs font-black transition bg-blue-600 text-white shadow-md whitespace-nowrap";
+        const activeClass = "flex-1 sm:flex-none px-5 sm:px-6 py-2 rounded-lg text-xs font-black transition bg-blue-600 text-white shadow-md whitespace-nowrap cursor-pointer";
         const btn = document.getElementById(`sum-tab-${window.currentAgency}`);
         if (btn) btn.className = activeClass;
         
         window.renderSummaryPortal(false);
     };
 
-    // 🚀 FIX: Run immediately. Do NOT wait for DOMContentLoaded in a dynamically loaded SPA!
     setTimeout(window.initSummaryPortal, 50);
 
 </script>
