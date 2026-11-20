@@ -227,7 +227,7 @@
 
 <script>
     // 🚀 GLOBAL & USER STATE
-    window.API_URL = window.API_URL || "https://script.google.com/macros/s/AKfycbxYMiv0JkwTGb0HAc-K6mBF5C9iXYdchW44GUmgmnLc7YHUDmJEU6LIyPtCFnF0H3l7/exec";
+    window.API_URL = window.API_URL || "https://script.google.com/macros/s/AKfycbyT-78Ww9I9Kw7pW9Z0bxAd525DwL-VF3mO0Uk3_HrdeV8Zwqn52vSu_mNNtbYAXWW9/exec";
     window.AVAILABLE_AGENCIES = window.AVAILABLE_AGENCIES || ["Equalitas", "A-Mark", "TCIL"];
 
     const activeSession = localStorage.getItem('portal_user');
@@ -390,11 +390,14 @@
     function parseIndianDateString(rawString) {
         if (!rawString) return null;
         const str = String(rawString).trim();
-        const isoRegex = /(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/;
+        
+        // Handles YYYY-MM-DD
+        const isoRegex = /(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})/;
         let match = isoRegex.exec(str);
         if (match) return new Date(parseInt(match[1], 10), parseInt(match[2], 10) - 1, parseInt(match[3], 10));
 
-        const inRegex = /(?:^|[^\d])(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})(?=[^\d]|$)/;
+        // Handles DD-MM-YYYY
+        const inRegex = /(?:^|[^\d])(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{2,4})(?=[^\d]|$)/;
         match = inRegex.exec(str);
         if (match) {
             let y = parseInt(match[3], 10);
@@ -406,18 +409,41 @@
 
     function parseAllIndianDates(rawStr) {
         if (!rawStr) return [];
+        const str = String(rawStr).trim();
         const results = [];
-        const str = String(rawStr).replace(/[a-zA-Z]+\s*at/gi, '').trim();
-        const words = str.split(/[\s,]+/);
-        words.forEach(w => {
-            const d = parseIndianDateString(w);
-            if (d && !isNaN(d)) results.push(d);
-        });
-        if (results.length === 0) {
-            const d = parseIndianDateString(str);
-            if (d && !isNaN(d)) results.push(d);
+        
+        // Google Sheets / Excel Serial Date Check (e.g. 45193 for Sept 24, 2026)
+        if (!isNaN(str) && Number(str) > 40000 && Number(str) < 50000) {
+            const d = new Date((Number(str) - 25569) * 86400 * 1000);
+            return [d];
+        }
+
+        // Global regex to reliably pluck out date patterns without splitting by spaces
+        const datePattern = /(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4}|\d{4}[\/\-\.]\d{1,2}[\/\-\.]\d{1,2})/g;
+        const matches = str.match(datePattern);
+        
+        if (matches && matches.length > 0) {
+            matches.forEach(m => {
+                const d = parseIndianDateString(m);
+                if (d && !isNaN(d.getTime())) results.push(d);
+            });
+        } else {
+            // Fallback for native ISO strings (like "2026-09-24T18:30:00.000Z")
+            const d = new Date(str);
+            if (!isNaN(d.getTime())) results.push(d);
         }
         return results;
+    }
+
+    function getLastInspectionDate(rawStr) {
+        const dates = parseAllIndianDates(rawStr);
+        if (!dates || dates.length === 0) return null;
+        
+        // Map to valid numbers (timestamps) so Math.max doesn't crash on an invalid entry
+        const timestamps = dates.map(d => d.getTime()).filter(t => !isNaN(t));
+        if (timestamps.length === 0) return null;
+        
+        return new Date(Math.max(...timestamps));
     }
 
     function extractTotalMandays(rawVal) {
@@ -658,14 +684,19 @@
 
         data.forEach(row => {
             const inspector = String(window.getRowValue(row, 'inspecting engineer') || 'Unassigned').trim();
-            if (!inspectorMap[inspector]) inspectorMap[inspector] = { completedTasks: [], preparedTasks: [] };
+            if (!inspectorMap[inspector]) return;
 
-            const inspLogRaw = window.getRowValue(row, 'inspection completion log') || window.getRowValue(row, 'inspection completed') || '';
+            const isCompletedStatusFlag = window.getRowValue(row, 'inspection completed?') || window.getRowValue(row, 'inspection completed') || '';
+            const dateOfInspRaw = window.getRowValue(row, 'date of inspection') || window.getRowValue(row, 'inspection date') || '';
             const prepLogRaw = window.getRowValue(row, 'report prepared') || window.getRowValue(row, 'report repared') || '';
 
-            if (isCompletedStatus(inspLogRaw) && parseAllIndianDates(inspLogRaw).some(dt => `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}` === selectedDate)) {
-                inspectorMap[inspector].completedTasks.push(row);
+            if (isCompletedStatus(isCompletedStatusFlag)) {
+                const finalDate = getLastInspectionDate(dateOfInspRaw);
+                if (finalDate && `${finalDate.getFullYear()}-${String(finalDate.getMonth() + 1).padStart(2, '0')}-${String(finalDate.getDate()).padStart(2, '0')}` === selectedDate) {
+                    inspectorMap[inspector].completedTasks.push(row);
+                }
             }
+            
             if (isCompletedStatus(prepLogRaw) && parseAllIndianDates(prepLogRaw).some(dt => `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}` === selectedDate)) {
                 inspectorMap[inspector].preparedTasks.push(row);
             }
@@ -841,21 +872,20 @@
             const inspector = String(window.getRowValue(row, 'inspecting engineer') || 'Unassigned').trim();
             if (!inspectorMap[inspector]) return;
 
-            const inspLogRaw = window.getRowValue(row, 'inspection completion log') || window.getRowValue(row, 'inspection completed') || '';
+            const isCompletedStatusFlag = window.getRowValue(row, 'inspection completed?') || window.getRowValue(row, 'inspection completed') || '';
+            const dateOfInspRaw = window.getRowValue(row, 'date of inspection') || window.getRowValue(row, 'inspection date') || '';
             const prepLogRaw = window.getRowValue(row, 'report prepared') || window.getRowValue(row, 'report repared') || '';
             const callMandays = extractTotalMandays(window.getRowValue(row, 'calculated mandays'));
 
-            if (isCompletedStatus(inspLogRaw)) {
-                const dts = parseAllIndianDates(inspLogRaw);
-                dts.forEach(dt => {
-                    if (dt.getFullYear() === selYear && (dt.getMonth() + 1) === selMonth) {
-                        const d = dt.getDate();
-                        if (d <= maxDay) {
-                            inspectorMap[inspector].days[d].comp.push(row);
-                            inspectorMap[inspector].totalComp++;
-                        }
+            if (isCompletedStatus(isCompletedStatusFlag)) {
+                const finalDate = getLastInspectionDate(dateOfInspRaw);
+                if (finalDate && finalDate.getFullYear() === selYear && (finalDate.getMonth() + 1) === selMonth) {
+                    const d = finalDate.getDate();
+                    if (d <= maxDay) {
+                        inspectorMap[inspector].days[d].comp.push(row);
+                        inspectorMap[inspector].totalComp++;
                     }
-                });
+                }
             }
 
             if (isCompletedStatus(prepLogRaw)) {
@@ -1104,3 +1134,4 @@
     setTimeout(window.initDailyPortal, 50);
 
 </script>
+```<FollowUp>Let me know if the monthly report correctly registers these final dates now, or if you need any adjustments to how the summary mandays are calculated!</FollowUp>
